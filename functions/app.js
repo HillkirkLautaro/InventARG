@@ -10,6 +10,7 @@ const themeToggle = document.querySelector("#theme-toggle");
 
 function applyTheme(theme) {
   const isDark = theme === "dark";
+  
   document.body.classList.toggle("dark", isDark);
 
   if (themeToggle) {
