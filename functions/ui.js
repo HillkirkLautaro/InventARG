@@ -25,6 +25,7 @@ export function renderProducts(products) {
         <button type="button" data-id="${p.id}" class="edit">Editar</button>
         <button type="button" data-id="${p.id}" class="delete">Eliminar</button>
       </div>
+      
     `;
     list.appendChild(item);
   });
