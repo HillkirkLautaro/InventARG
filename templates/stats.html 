@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>InventARG - Estadísticas</title>
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+
+  <body>
+    <main>
+      <div class="top-bar">
+        <h1>Estadísticas</h1>
+        <button id="theme-toggle" type="button">Modo oscuro</button>
+      </div>
+
+      <section class="stats-grid">
+        <div class="stat-card">
+          <h3>Total de productos</h3>
+          <p id="total-products">0</p>
+        </div>
+
+        <div class="stat-card">
+          <h3>Stock total</h3>
+          <p id="total-stock">0</p>
+        </div>
+
+        <div class="stat-card">
+          <h3>Valor total</h3>
+          <p id="total-value">$0</p>
+        </div>
+
+        <div class="stat-card">
+          <h3>Producto más caro</h3>
+          <p id="max-price">-</p>
+        </div>
+
+        <div class="stat-card">
+          <h3>Stock bajo (&lt; 5)</h3>
+          <p id="low-stock">0</p>
+        </div>
+      </section>
+
+      <div style="margin-top: 1.5rem;">
+        <a href="index.html">
+          <button class="secondary">Volver al inventario</button>
+        </a>
+      </div>
+    </main>
+
+    <script type="module" src="./js/stats.js"></script>
+  </body>
+</html>
