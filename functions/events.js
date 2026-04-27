@@ -73,5 +73,29 @@ export function initEvents() {
       currentEditId = id;
       submitButton.textContent = "Guardar cambios";
     }
+
+    if (e.target.classList.contains("increment") || e.target.classList.contains("decrement")) {
+      const id = e.target.dataset.id;
+      const products = getProducts();
+      const index = products.findIndex(p => p.id === id);
+
+      if (index === -1) {
+        return;
+      }
+
+      const change = e.target.classList.contains("increment") ? 1 : -1;
+      const newStock = products[index].stock + change;
+      products[index] = {
+        ...products[index],
+        stock: newStock < 0 ? 0 : newStock
+      };
+
+      saveProducts(products);
+      renderProducts(products);
+
+      if (currentEditId === id) {
+        form.stock.value = products[index].stock;
+      }
+    }
   });
 }
