@@ -4,6 +4,7 @@ import { renderProducts } from "./ui.js";
 export function initEvents() {
   const form = document.getElementById("product-form");
   const cancelEditButton = document.getElementById("cancel-edit");
+  const searchInput = document.getElementById("product-search");
   const submitButton = form.querySelector("button[type=submit]");
   let currentEditId = null;
 
@@ -11,6 +12,16 @@ export function initEvents() {
     currentEditId = null;
     form.reset();
     submitButton.textContent = "Agregar";
+  }
+
+  function renderFilteredProducts() {
+    const query = searchInput.value.trim().toLowerCase();
+    const products = getProducts();
+    const filtered = query
+      ? products.filter(product => product.name.toLowerCase().includes(query))
+      : products;
+
+    renderProducts(filtered);
   }
 
   form.addEventListener("submit", e => {
@@ -36,12 +47,16 @@ export function initEvents() {
     }
 
     saveProducts(products);
-    renderProducts(products);
+    renderFilteredProducts();
     resetForm();
   });
 
   cancelEditButton.addEventListener("click", () => {
     resetForm();
+  });
+
+  searchInput.addEventListener("input", () => {
+    renderFilteredProducts();
   });
 
   document.addEventListener("click", e => {
@@ -52,7 +67,7 @@ export function initEvents() {
       products = products.filter(p => p.id !== id);
 
       saveProducts(products);
-      renderProducts(products);
+      renderFilteredProducts();
       if (currentEditId === id) {
         resetForm();
       }
@@ -72,7 +87,7 @@ export function initEvents() {
       products[index].stock = Math.max(0, currentStock + delta);
 
       saveProducts(products);
-      renderProducts(products);
+      renderFilteredProducts();
       return;
     }
 
