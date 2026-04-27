@@ -104,6 +104,8 @@ El archivo debe ser un **array de objetos**, donde cada objeto representa un pro
     "stock": 15
   }
 ]
+
+```
 ---
 
 ## 👨‍💻 Autor
