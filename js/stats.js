@@ -7,19 +7,16 @@ function formatMoney(value) {
 function calculateStats(products) {
   const totalProducts = products.length;
 
-  const totalStock = products.reduce((acc, p) => acc + p.stock, 0);
+  const totalStock = products.reduce((acc, product) => acc + product.stock, 0);
 
-  const totalValue = products.reduce(
-    (acc, p) => acc + p.price * p.stock,
-    0
-  );
+  let totalValue = 0;
+  for (const product of products) {
+    totalValue += product.price * product.stock;
+  }
 
-  const maxPriceProduct = products.reduce((max, p) =>
-    p.price > (max?.price || 0) ? p : max,
-    null
-  );
+  const maxPriceProduct = products.reduce((max, product) => product.price > (max?.price || 0) ? product : max, null);
 
-  const lowStock = products.filter(p => p.stock < 5).length;
+  const lowStock = products.filter(product => product.stock < 5).length;
 
   return {
     totalProducts,
@@ -31,19 +28,22 @@ function calculateStats(products) {
 }
 
 function renderStats() {
-  const products = getProducts();
+  const products = getProducts(); // Asegúrate de que esta línea llame correctamente a la función getProducts()
   const stats = calculateStats(products);
 
-  document.getElementById("total-products").textContent = stats.totalProducts;
-  document.getElementById("total-stock").textContent = stats.totalStock;
-  document.getElementById("total-value").textContent = formatMoney(stats.totalValue);
+  const totalProductsElement = document.getElementById("total-products");
+  totalProductsElement.textContent = stats.totalProducts;
 
-  document.getElementById("max-price").textContent =
-    stats.maxPriceProduct
-      ? `${stats.maxPriceProduct.name} ($${stats.maxPriceProduct.price})`
-      : "-";
+  const totalStockElement = document.getElementById("total-stock");
+  totalStockElement.textContent = stats.totalStock;
 
-  document.getElementById("low-stock").textContent = stats.lowStock;
+  const totalValueElement = document.getElementById("total-value");
+  totalValueElement.textContent = formatMoney(stats.totalValue);
+
+  const maxPriceElement = document.getElementById("max-price");
+  maxPriceElement.textContent = stats.maxPriceProduct ? `${stats.maxPriceProduct.name} ($${stats.maxPriceProduct.price})` : "-";
+
+  const lowStockElement = document.getElementById("low-stock");
+  lowStockElement.textContent = stats.lowStock;
 }
-
 renderStats();
