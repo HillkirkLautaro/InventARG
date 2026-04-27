@@ -100,11 +100,59 @@ export function initEvents() {
         return;
       }
 
-      form.name.value = product.name;
-      form.price.value = product.price;
-      form.stock.value = product.stock;
-      currentEditId = id;
-      submitButton.textContent = "Guardar cambios";
+      const item = e.target.closest(".product-item");
+      if (!item) {
+        return;
+      }
+
+      item.innerHTML = `
+        <div class="product-edit">
+          <input type="text" class="edit-name" value="${product.name}" />
+          <input type="number" class="edit-price" min="0" value="${product.price}" />
+          <input type="number" class="edit-stock" min="0" value="${product.stock}" />
+        </div>
+        <div class="product-actions">
+          <button type="button" data-id="${id}" class="save-inline">Guardar</button>
+          <button type="button" data-id="${id}" class="cancel-inline">Cancelar</button>
+        </div>
+      `;
+
+      return;
+    }
+
+    if (e.target.classList.contains("save-inline")) {
+      const id = e.target.dataset.id;
+      const item = e.target.closest(".product-item");
+      if (!item) {
+        return;
+      }
+
+      const nameInput = item.querySelector(".edit-name");
+      const priceInput = item.querySelector(".edit-price");
+      const stockInput = item.querySelector(".edit-stock");
+      const name = nameInput?.value.trim();
+      const price = Number(priceInput?.value);
+      const stock = Number(stockInput?.value);
+
+      if (!name || Number.isNaN(price) || Number.isNaN(stock)) {
+        return;
+      }
+
+      const products = getProducts();
+      const index = products.findIndex(p => p.id === id);
+      if (index === -1) {
+        return;
+      }
+
+      products[index] = { ...products[index], name, price, stock };
+      saveProducts(products);
+      renderFilteredProducts();
+      return;
+    }
+
+    if (e.target.classList.contains("cancel-inline")) {
+      renderFilteredProducts();
+      return;
     }
   });
 }
