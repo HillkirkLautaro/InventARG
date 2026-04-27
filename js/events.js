@@ -93,6 +93,86 @@ export function initEvents() {
     searchToggleCategoryButton?.classList.remove("hidden");
   });
 
+  const exportButton = document.getElementById("export-json");
+  const importButton = document.getElementById("import-json");
+  const importFileInput = document.getElementById("import-file");
+
+  function downloadProducts() {
+    const products = getProducts();
+    const blob = new Blob([JSON.stringify(products, null, 2)], { type: "application/json" });
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement("a");
+    const timestamp = new Date().toISOString().slice(0, 19).replace(/[:T]/g, "-");
+
+    link.href = url;
+    link.download = `inventarg-products-${timestamp}.json`;
+    document.body.appendChild(link);
+    link.click();
+    link.remove();
+    URL.revokeObjectURL(url);
+  }
+
+  function parseImportedProducts(fileText) {
+    try {
+      const products = JSON.parse(fileText);
+
+      if (!Array.isArray(products)) {
+        return null;
+      }
+
+      return products
+        .filter(product => product && typeof product === "object")
+        .map(product => ({
+          id: product.id || crypto.randomUUID(),
+          name: String(product.name || "").trim(),
+          category: String(product.category || "").trim(),
+          price: Number(product.price || 0),
+          stock: Number(product.stock || 0)
+        }))
+        .filter(product => product.name.length > 0);
+    } catch {
+      return null;
+    }
+  }
+
+  function importProducts(event) {
+    const file = event.target.files?.[0];
+    if (!file) {
+      return;
+    }
+
+    const reader = new FileReader();
+    reader.onload = () => {
+      const imported = parseImportedProducts(String(reader.result || ""));
+
+      if (!imported) {
+        alert("El archivo no contiene un JSON válido de productos.");
+        importFileInput.value = "";
+        return;
+      }
+
+      saveProducts(imported);
+      renderFilteredProducts();
+      importFileInput.value = "";
+      alert("Importación completada correctamente.");
+    };
+    reader.onerror = () => {
+      alert("No se pudo leer el archivo seleccionado.");
+      importFileInput.value = "";
+    };
+    reader.readAsText(file);
+  }
+
+  if (exportButton) {
+    exportButton.addEventListener("click", downloadProducts);
+  }
+
+  if (importButton) {
+    importButton.addEventListener("click", () => importFileInput?.click());
+  }
+
+  importFileInput?.addEventListener("change", importProducts);
+
   document.addEventListener("click", e => {
     if (e.target.classList.contains("delete")) {
       const id = e.target.dataset.id;
