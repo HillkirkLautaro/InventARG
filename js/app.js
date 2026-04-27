@@ -36,4 +36,10 @@ function initTheme() {
   }
 }
 
+const goStatsButton = document.getElementById("go-stats");
+
+goStatsButton.addEventListener("click", function() {
+  window.location.href = "stats.html";
+});
+
 initTheme();
