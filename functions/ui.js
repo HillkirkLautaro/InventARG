@@ -20,8 +20,8 @@ export function renderProducts(products) {
         <p>Stock: ${p.stock}</p>
       </div>
       <div class="product-actions">
-        <button type="button" data-id="${p.id}" class="decrement">-1</button>
-        <button type="button" data-id="${p.id}" class="increment">+1</button>
+        <button type="button" data-id="${p.id}" class="decrement" title="Restar stock">-</button>
+        <button type="button" data-id="${p.id}" class="increment" title="Sumar stock">+</button>
         <button type="button" data-id="${p.id}" class="edit">Editar</button>
         <button type="button" data-id="${p.id}" class="delete">Eliminar</button>
       </div>
