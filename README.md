@@ -26,6 +26,7 @@ InventARG es una aplicación web simple de gestión de inventario construida con
 - Busqueda por nombre
 - Busqueda por categoria
 - Modo oscuro
+- Importacion/Exportacion de JSON
 
 ---
 
@@ -60,6 +61,10 @@ Este proyecto fue creado con fines de:
 - Filtros y búsqueda avanzada
 - Diseño responsive mejorado
 - Historial de movimientos
+
+---
+
+Se puede copiar con Git clone, o probar la importacion con el archivo "prueba22.json"
 
 ---
 
