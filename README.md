@@ -28,7 +28,7 @@ InventARG es una aplicación web simple de gestión de inventario construida con
 - Modo oscuro
 - Importacion/Exportacion de JSON
 - Pagina con Estadisticas de Productos
-
+- PWA
 ---
 
 ## 💾 Cómo funciona
