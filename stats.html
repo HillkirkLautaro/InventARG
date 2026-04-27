@@ -1,10 +1,11 @@
 <!DOCTYPE html>
 <html lang="es">
   <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>InventARG - Estadísticas</title>
-    <link rel="stylesheet" href="./styles.css" />
+
+    <link rel="stylesheet" href="./styles.css">
     <link rel="manifest" href="/InventARG/manifest.json">
     <meta name="theme-color" content="#2c3e50">
   </head>
@@ -18,68 +19,69 @@
 
       <section class="stats-grid">
         <div class="stat-card">
-          <h3>Total de productos</h3>
+          <h2>Total de productos</h2>
           <p id="total-products">0</p>
         </div>
 
         <div class="stat-card">
-          <h3>Stock total</h3>
+          <h2>Stock total</h2>
           <p id="total-stock">0</p>
         </div>
 
         <div class="stat-card">
-          <h3>Valor total</h3>
+          <h2>Valor total</h2>
           <p id="total-value">$0</p>
         </div>
 
         <div class="stat-card">
-          <h3>Producto más caro</h3>
+          <h2>Producto más caro</h2>
           <p id="max-price">-</p>
         </div>
 
         <div class="stat-card">
-          <h3>Stock bajo (&lt; 5)</h3>
+          <h2>Stock bajo (&lt; 5)</h2>
           <p id="low-stock">0</p>
         </div>
       </section>
 
       <div style="margin-top: 1.5rem;">
-        <a href="index.html">
-          <button class="secondary">Volver al inventario</button>
+        <a href="index.html" class="secondary">
+          Volver al inventario
         </a>
       </div>
     </main>
 
     <script type="module" src="./js/stats.js"></script>
+
     <script>
-  const themeToggle = document.getElementById("theme-toggle");
+      const themeToggle = document.getElementById("theme-toggle");
 
-  function applyTheme(theme) {
-    const isDark = theme === "dark";
-    document.body.classList.toggle("dark", isDark);
+      function applyTheme(theme) {
+        const isDark = theme === "dark";
+        document.body.classList.toggle("dark", isDark);
 
-    if (themeToggle) {
-      themeToggle.textContent = isDark ? "Modo claro" : "Modo oscuro";
-    }
-  }
+        if (themeToggle) {
+          themeToggle.textContent = isDark ? "Modo claro" : "Modo oscuro";
+        }
+      }
 
-  function toggleTheme() {
-    const isDark = document.body.classList.toggle("dark");
-    localStorage.setItem("theme", isDark ? "dark" : "light");
+      function toggleTheme() {
+        const isDark = document.body.classList.toggle("dark");
+        localStorage.setItem("theme", isDark ? "dark" : "light");
 
-    if (themeToggle) {
-      themeToggle.textContent = isDark ? "Modo claro" : "Modo oscuro";
-    }
-  }
+        if (themeToggle) {
+          themeToggle.textContent = isDark ? "Modo claro" : "Modo oscuro";
+        }
+      }
 
-  function initTheme() {
-    const savedTheme = localStorage.getItem("theme") || "light";
-    applyTheme(savedTheme);
+      function initTheme() {
+        const savedTheme = localStorage.getItem("theme") || "light";
+        applyTheme(savedTheme);
 
-    themeToggle?.addEventListener("click", toggleTheme);
-  }
+        themeToggle?.addEventListener("click", toggleTheme);
+      }
 
-  initTheme();
-</script>
+      initTheme();
+    </script>
   </body>
 </html>
