@@ -14,12 +14,15 @@ export function renderProducts(products) {
     const item = document.createElement("li");
     item.className = "product-item";
     item.innerHTML = `
-      <div>
+      <div class="product-info">
         <h3>${p.name}</h3>
         <p>Precio: $${p.price}</p>
         <p>Stock: ${p.stock}</p>
       </div>
-      <button data-id="${p.id}" class="delete">Eliminar</button>
+      <div class="product-actions">
+        <button type="button" data-id="${p.id}" class="edit">Editar</button>
+        <button type="button" data-id="${p.id}" class="delete">Eliminar</button>
+      </div>
     `;
     list.appendChild(item);
   });
