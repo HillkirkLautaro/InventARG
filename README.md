@@ -103,7 +103,7 @@ El archivo debe ser un **array de objetos**, donde cada objeto representa un pro
     "price": 18000,
     "stock": 15
   }
-]```
+]
 ---
 
 ## 👨‍💻 Autor
