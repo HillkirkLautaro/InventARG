@@ -50,12 +50,6 @@ Este proyecto fue creado con fines de:
 
 ---
 
-## 📷 Vista previa
-
-*(Podés agregar aquí una imagen del proyecto si querés)*
-
----
-
 ## 📈 Posibles mejoras futuras
 
 - Sistema de usuarios y login
