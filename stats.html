@@ -49,5 +49,35 @@
     </main>
 
     <script type="module" src="./js/stats.js"></script>
+    <script>
+  const themeToggle = document.getElementById("theme-toggle");
+
+  function applyTheme(theme) {
+    const isDark = theme === "dark";
+    document.body.classList.toggle("dark", isDark);
+
+    if (themeToggle) {
+      themeToggle.textContent = isDark ? "Modo claro" : "Modo oscuro";
+    }
+  }
+
+  function toggleTheme() {
+    const isDark = document.body.classList.toggle("dark");
+    localStorage.setItem("theme", isDark ? "dark" : "light");
+
+    if (themeToggle) {
+      themeToggle.textContent = isDark ? "Modo claro" : "Modo oscuro";
+    }
+  }
+
+  function initTheme() {
+    const savedTheme = localStorage.getItem("theme") || "light";
+    applyTheme(savedTheme);
+
+    themeToggle?.addEventListener("click", toggleTheme);
+  }
+
+  initTheme();
+</script>
   </body>
 </html>
