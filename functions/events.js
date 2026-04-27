@@ -3,27 +3,45 @@ import { renderProducts } from "./ui.js";
 
 export function initEvents() {
   const form = document.getElementById("product-form");
+  const cancelEditButton = document.getElementById("cancel-edit");
+  const submitButton = form.querySelector("button[type=submit]");
+  let currentEditId = null;
+
+  function resetForm() {
+    currentEditId = null;
+    form.reset();
+    submitButton.textContent = "Agregar";
+  }
 
   form.addEventListener("submit", e => {
     e.preventDefault();
 
-    const name = form.name.value;
+    const name = form.name.value.trim();
     const price = Number(form.price.value);
     const stock = Number(form.stock.value);
-
     const products = getProducts();
 
-    products.push({
-      id: crypto.randomUUID(),
-      name,
-      price,
-      stock
-    });
+    if (currentEditId !== null) {
+      const index = products.findIndex(p => p.id === currentEditId);
+      if (index !== -1) {
+        products[index] = { id: currentEditId, name, price, stock };
+      }
+    } else {
+      products.push({
+        id: crypto.randomUUID(),
+        name,
+        price,
+        stock
+      });
+    }
 
     saveProducts(products);
     renderProducts(products);
+    resetForm();
+  });
 
-    form.reset();
+  cancelEditButton.addEventListener("click", () => {
+    resetForm();
   });
 
   document.addEventListener("click", e => {
@@ -35,6 +53,25 @@ export function initEvents() {
 
       saveProducts(products);
       renderProducts(products);
+      if (currentEditId === id) {
+        resetForm();
+      }
+    }
+
+    if (e.target.classList.contains("edit")) {
+      const id = e.target.dataset.id;
+      const products = getProducts();
+      const product = products.find(p => p.id === id);
+
+      if (!product) {
+        return;
+      }
+
+      form.name.value = product.name;
+      form.price.value = product.price;
+      form.stock.value = product.stock;
+      currentEditId = id;
+      submitButton.textContent = "Guardar cambios";
     }
   });
 }
