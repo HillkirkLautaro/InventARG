@@ -42,4 +42,16 @@ goStatsButton.addEventListener("click", function() {
   window.location.href = "stats.html";
 });
 
+if ("serviceWorker" in navigator) {
+  window.addEventListener("load", () => {
+    navigator.serviceWorker.register("/InventARG/sw.js")
+      .then((reg) => {
+        console.log("SW registrado:", reg.scope);
+      })
+      .catch((err) => {
+        console.log("Error SW:", err);
+      });
+  });
+}
+
 initTheme();
