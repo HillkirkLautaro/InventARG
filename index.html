@@ -15,6 +15,7 @@
 
       <form id="product-form">
         <input name="name" placeholder="Nombre" required />
+        <input name="category" placeholder="Categoría" />
         <input name="price" type="number" placeholder="Precio" required />
         <input name="stock" type="number" placeholder="Stock" required />
         <div class="form-actions">
@@ -25,7 +26,9 @@
 
       <section class="list-section">
         <h2>Lista de productos</h2>
-        <input id="product-search" type="search" placeholder="Buscar por nombre" />
+        <button type="button" id="search-toggle-name">Buscar por nombre</button>
+        <button type="button" id="search-toggle-category">Buscar por categoría</button>
+        <input id="product-search" type="search" placeholder="Buscar por nombre" class="hidden" />
         <ul id="product-list" class="product-list"></ul>
       </section>
     </main>

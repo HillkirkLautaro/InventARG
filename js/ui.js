@@ -16,6 +16,7 @@ export function renderProducts(products) {
     item.innerHTML = `
       <div class="product-info">
         <h3>${p.name}</h3>
+        <p>Categoría: ${p.category || "Sin categoría"}</p>
         <p>Precio: $${p.price}</p>
         <p>Stock: ${p.stock}</p>
       </div>

@@ -5,8 +5,11 @@ export function initEvents() {
   const form = document.getElementById("product-form");
   const cancelEditButton = document.getElementById("cancel-edit");
   const searchInput = document.getElementById("product-search");
+  const searchToggleNameButton = document.getElementById("search-toggle-name");
+  const searchToggleCategoryButton = document.getElementById("search-toggle-category");
   const submitButton = form.querySelector("button[type=submit]");
   let currentEditId = null;
+  let searchMode = "name";
 
   function resetForm() {
     currentEditId = null;
@@ -18,7 +21,13 @@ export function initEvents() {
     const query = searchInput.value.trim().toLowerCase();
     const products = getProducts();
     const filtered = query
-      ? products.filter(product => product.name.toLowerCase().includes(query))
+      ? products.filter(product => {
+          if (searchMode === "category") {
+            return product.category?.toLowerCase().includes(query);
+          }
+
+          return product.name.toLowerCase().includes(query);
+        })
       : products;
 
     renderProducts(filtered);
@@ -28,6 +37,7 @@ export function initEvents() {
     e.preventDefault();
 
     const name = form.name.value.trim();
+    const category = form.category.value.trim();
     const price = Number(form.price.value);
     const stock = Number(form.stock.value);
     const products = getProducts();
@@ -35,12 +45,13 @@ export function initEvents() {
     if (currentEditId !== null) {
       const index = products.findIndex(p => p.id === currentEditId);
       if (index !== -1) {
-        products[index] = { id: currentEditId, name, price, stock };
+        products[index] = { id: currentEditId, name, category, price, stock };
       }
     } else {
       products.push({
         id: crypto.randomUUID(),
         name,
+        category,
         price,
         stock
       });
@@ -55,8 +66,31 @@ export function initEvents() {
     resetForm();
   });
 
+  function openSearch(mode) {
+    searchMode = mode;
+    searchInput.placeholder = mode === "category" ? "Buscar por categoría" : "Buscar por nombre";
+    searchInput.classList.remove("hidden");
+    searchToggleNameButton?.classList.add("hidden");
+    searchToggleCategoryButton?.classList.add("hidden");
+    searchInput.focus();
+  }
+
+  if (searchToggleNameButton) {
+    searchToggleNameButton.addEventListener("click", () => openSearch("name"));
+  }
+
+  if (searchToggleCategoryButton) {
+    searchToggleCategoryButton.addEventListener("click", () => openSearch("category"));
+  }
+
   searchInput.addEventListener("input", () => {
     renderFilteredProducts();
+  });
+
+  searchInput.addEventListener("blur", () => {
+    searchInput.classList.add("hidden");
+    searchToggleNameButton?.classList.remove("hidden");
+    searchToggleCategoryButton?.classList.remove("hidden");
   });
 
   document.addEventListener("click", e => {
@@ -108,6 +142,7 @@ export function initEvents() {
       item.innerHTML = `
         <div class="product-edit">
           <input type="text" class="edit-name" value="${product.name}" />
+          <input type="text" class="edit-category" value="${product.category || ""}" />
           <input type="number" class="edit-price" min="0" value="${product.price}" />
           <input type="number" class="edit-stock" min="0" value="${product.stock}" />
         </div>
@@ -128,9 +163,11 @@ export function initEvents() {
       }
 
       const nameInput = item.querySelector(".edit-name");
+      const categoryInput = item.querySelector(".edit-category");
       const priceInput = item.querySelector(".edit-price");
       const stockInput = item.querySelector(".edit-stock");
       const name = nameInput?.value.trim();
+      const category = categoryInput?.value.trim();
       const price = Number(priceInput?.value);
       const stock = Number(stockInput?.value);
 
@@ -144,7 +181,7 @@ export function initEvents() {
         return;
       }
 
-      products[index] = { ...products[index], name, price, stock };
+      products[index] = { ...products[index], name, category, price, stock };
       saveProducts(products);
       renderFilteredProducts();
       return;

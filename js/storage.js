@@ -19,12 +19,21 @@ export function getProducts() {
           return null;
         }
 
+        const normalizedProduct = {
+          ...product,
+          category: product.category || ""
+        };
+
         if (!product.id) {
           normalized = true;
-          return { ...product, id: crypto.randomUUID() };
+          return { ...normalizedProduct, id: crypto.randomUUID() };
         }
 
-        return product;
+        if (product.category === undefined) {
+          normalized = true;
+        }
+
+        return normalizedProduct;
       })
       .filter(Boolean);
 
