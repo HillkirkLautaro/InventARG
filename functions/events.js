@@ -58,6 +58,24 @@ export function initEvents() {
       }
     }
 
+    if (e.target.classList.contains("stock-add") || e.target.classList.contains("stock-remove")) {
+      const id = e.target.dataset.id;
+      const products = getProducts();
+      const index = products.findIndex(p => p.id === id);
+
+      if (index === -1) {
+        return;
+      }
+
+      const delta = e.target.classList.contains("stock-add") ? 1 : -1;
+      const currentStock = Number(products[index].stock || 0);
+      products[index].stock = Math.max(0, currentStock + delta);
+
+      saveProducts(products);
+      renderProducts(products);
+      return;
+    }
+
     if (e.target.classList.contains("edit")) {
       const id = e.target.dataset.id;
       const products = getProducts();
