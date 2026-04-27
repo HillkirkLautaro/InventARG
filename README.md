@@ -24,6 +24,8 @@ InventARG es una aplicación web simple de gestión de inventario construida con
 - Interfaz simple y ligera
 - Funciona completamente en el navegador (sin backend)
 - Busqueda por nombre
+- Busqueda por categoria
+- Modo oscuro
 
 ---
 
