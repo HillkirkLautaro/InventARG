@@ -2,7 +2,7 @@
 
 InventARG es una aplicación web simple de gestión de inventario construida con **HTML, CSS y JavaScript puro**, desplegada en GitHub Pages.
 
-👉 Demo en vivo: https://hillkirklautaro.github.io/InventARG/
+👉 Demo en vivo: hillkirklautaro.github.io/InventARG/
 
 ---
 
